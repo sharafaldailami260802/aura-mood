@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="1334" viewBox="0 0 750 1334">
+  <rect width="750" height="1334" fill="#FAF7F2"/>
+  <rect x="0" y="0" width="750" height="88" fill="#FFFEF9" stroke="#8B9D83" stroke-width="1" opacity="0.3"/>
+  <text x="375" y="54" font-family="system-ui, sans-serif" font-size="22" fill="#8B9D83" text-anchor="middle">Aura</text>
+  <text x="375" y="520" font-family="system-ui, sans-serif" font-size="36" fill="#8B9D83" text-anchor="middle">Mood Analytics</text>
+  <text x="375" y="570" font-family="system-ui, sans-serif" font-size="18" fill="#4A4A4A" text-anchor="middle">Daily check-in " Journal " Insights</text>
+  <rect x="175" y="660" width="400" height="140" rx="16" fill="#FFFEF9" stroke="#8B9D83" stroke-width="2" opacity="0.5"/>
+  <rect x="175" y="820" width="400" height="140" rx="16" fill="#FFFEF9" stroke="#8B9D83" stroke-width="2" opacity="0.5"/>
+</svg>
