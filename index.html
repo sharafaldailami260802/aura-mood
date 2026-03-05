@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#8B9D83">
+    <meta name="theme-color" content="#ea580c">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Aura">
@@ -15,11 +15,14 @@
     <link rel="apple-touch-startup-image" href="screenshot-narrow.svg" media="(max-device-width: 768px) and (orientation: portrait)">
     <title>Aura — Mood Analytics</title>
     
-    <!-- Apply theme from cache immediately to avoid flash -->
+    <!-- Apply theme from cache immediately to avoid flash. Default: sunset, dark on. -->
     <script>
         (function() {
-            var t = localStorage.getItem('auraTheme') || 'aura';
-            var d = localStorage.getItem('auraDark') === 'true';
+            var t = localStorage.getItem('auraTheme');
+            if (t === null || t === '') t = 'sunset';
+            var d = localStorage.getItem('auraDark');
+            if (d === null || d === '') d = 'true';
+            else d = d === 'true';
             document.documentElement.setAttribute('data-theme', t);
             document.documentElement.setAttribute('data-dark', d ? 'true' : 'false');
         })();
@@ -2751,22 +2754,23 @@
             const journal = await db.appState.get('journalContent');
             var themeRow = await db.appState.get('theme');
             var darkRow = await db.appState.get('darkMode');
-            if (themeRow && themeRow.value) {
-                applyTheme(themeRow.value, darkRow && darkRow.value);
-                var sel = document.getElementById('themeSelect');
-                if (sel) sel.value = themeRow.value;
-            }
-            if (darkRow && darkRow.value !== undefined) {
-                document.documentElement.setAttribute('data-dark', darkRow.value ? 'true' : 'false');
-                localStorage.setItem('auraDark', darkRow.value ? 'true' : 'false');
-            }
+            var themeName = (themeRow && themeRow.value) ? themeRow.value : 'sunset';
+            var dark = (darkRow && darkRow.value !== undefined) ? !!darkRow.value : true;
+            applyTheme(themeName, dark);
+            var sel = document.getElementById('themeSelect');
+            if (sel) sel.value = themeName;
+            document.documentElement.setAttribute('data-dark', dark ? 'true' : 'false');
+            localStorage.setItem('auraDark', dark ? 'true' : 'false');
+            if (!themeRow || !themeRow.value) await db.appState.put({ key: 'theme', value: 'sunset' });
+            if (darkRow === undefined || darkRow.value === undefined) await db.appState.put({ key: 'darkMode', value: true });
             syncDarkToggleButtons();
             var soundRow = await db.appState.get('soundEnabled');
             window.auraSoundEnabled = !!(soundRow && soundRow.value);
             var soundToggle = document.getElementById('soundEnabledToggle');
             if (soundToggle) soundToggle.checked = window.auraSoundEnabled;
             var particlesRow = await db.appState.get('particlesEnabled');
-            var particlesOn = !!(particlesRow && particlesRow.value);
+            var particlesOn = (particlesRow && particlesRow.value !== undefined) ? !!particlesRow.value : true;
+            if (particlesRow === undefined || particlesRow.value === undefined) await db.appState.put({ key: 'particlesEnabled', value: true });
             var particlesToggle = document.getElementById('particlesEnabledToggle');
             if (particlesToggle) particlesToggle.checked = particlesOn;
             var particlesWrap = document.getElementById('ambientParticles');
