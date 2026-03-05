@@ -87,7 +87,7 @@
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
             --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
-            --focus-ring: 3px solid var(--accent-dark);
+            --focus-ring: 2px solid var(--accent-dark);
             --focus-offset: 2px;
         }
         [data-theme="midnight"] {
@@ -205,12 +205,29 @@
             }
         }
         
-        .logo { font-family: var(--font-display); font-size: 2rem; font-weight: 300; letter-spacing: 0.5px; margin-bottom: var(--space-lg); color: var(--text); transition: color 0.4s ease; }
-        .logo-accent { color: var(--accent); font-style: italic; }
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: var(--accent);
+            color: var(--surface);
+            padding: 6px;
+            box-sizing: border-box;
+        }
+        .logo-mark svg { width: 100%; height: 100%; display: block; }
+        .logo { font-family: var(--font-display); font-size: 1.75rem; font-weight: 400; letter-spacing: -0.02em; color: var(--text); transition: color 0.4s ease; }
+        .logo-accent { color: var(--accent); font-style: italic; font-weight: 300; }
         .section-label {
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 0.08em;
             color: var(--text-muted);
             margin: var(--space-lg) 0 var(--space-sm);
             font-weight: 600;
@@ -246,9 +263,11 @@
         }
         
         .nav.active {
-            background: color-mix(in srgb, var(--accent) 18%, transparent);
+            background: color-mix(in srgb, var(--accent) 14%, transparent);
             color: var(--accent-dark);
             font-weight: 500;
+            border-left: 3px solid var(--accent);
+            padding-left: calc(var(--space-md) - 3px);
         }
         
         .nav-icon {
@@ -312,11 +331,12 @@
         
         h1 {
             font-family: var(--font-display);
-            font-size: 3rem;
-            font-weight: 300;
+            font-size: 2.25rem;
+            font-weight: 400;
             margin-bottom: var(--space-lg);
             color: var(--text);
-            letter-spacing: -0.5px;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
             transition: color 0.4s ease;
         }
         
@@ -333,15 +353,15 @@
             padding: var(--space-lg);
             border-radius: 20px;
             border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
         }
         
         .metric:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06), 0 12px 28px rgba(0,0,0,0.06);
         }
         
         .metric h3 {
@@ -394,13 +414,13 @@
             padding: var(--space-lg);
             border-radius: 24px;
             border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.06);
+            transform: translateY(-1px);
         }
         
         .card h3 {
@@ -474,7 +494,7 @@
         .form textarea:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent);
         }
         
         .form textarea {
@@ -603,8 +623,8 @@
         
         .btn:hover {
             background: var(--accent-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 50%, transparent);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 45%, transparent);
         }
         
         .btn:active {
@@ -849,11 +869,14 @@
             position: fixed;
             top: var(--space-lg);
             right: var(--space-lg);
-            background: var(--sage);
-            color: white;
+            background: var(--surface);
+            color: var(--text);
             padding: var(--space-md) var(--space-lg);
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             transform: translateY(-100px);
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1647,7 +1670,12 @@
     <div class="app">
         <!-- Sidebar -->
         <aside class="sidebar" role="navigation" aria-label="Main navigation">
-            <h2 class="logo">Aura <span class="logo-accent">Analytics</span></h2>
+            <div class="logo-wrap">
+                <div class="logo-mark" aria-hidden="true">
+                    <svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="10"><path d="M56 96a40 40 0 0 1 80 0"/><path d="M48 96a48 48 0 0 1 96 0"/><path d="M40 96a56 56 0 0 1 112 0"/></g></svg>
+                </div>
+                <h2 class="logo">Aura <span class="logo-accent">Analytics</span></h2>
+            </div>
             
             <button type="button" class="sidebar-close-mobile" onclick="closeSidebar()" aria-label="Close menu">×</button>
             

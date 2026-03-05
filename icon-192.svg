@@ -1,22 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
-  <defs>
-    <linearGradient id="bg192" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#9BAF91"/>
-      <stop offset="100%" style="stop-color:#7A8D70"/>
-    </linearGradient>
-    <filter id="glow192">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-  <rect width="192" height="192" rx="40" fill="url(#bg192)"/>
-  <!-- Soft inner glow -->
-  <circle cx="96" cy="96" r="52" fill="#FAF7F2" opacity="0.2"/>
-  <!-- Aura curve (subtle arc) -->
-  <path d="M 56 118 Q 96 88 136 118" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
-  <!-- Letter A -->
-  <text x="96" y="108" font-family="Georgia, serif" font-size="72" font-weight="600" fill="#fff" text-anchor="middle" filter="url(#glow192)">A</text>
+  <!-- Solid background: one colour, no gradient. Reads at any size. -->
+  <rect width="192" height="192" rx="42" fill="#8B9D83"/>
+  <!-- Single idea: aura = ripple / breath. Three arcs, one shape. -->
+  <g fill="none" stroke="#FFF" stroke-linecap="round" stroke-width="10">
+    <path d="M56 96a40 40 0 0 1 80 0"/>
+    <path d="M48 96a48 48 0 0 1 96 0"/>
+    <path d="M40 96a56 56 0 0 1 112 0"/>
+  </g>
 </svg>
