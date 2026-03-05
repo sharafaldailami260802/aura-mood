@@ -1649,10 +1649,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: var(--space-md);
-            transition: opacity 0.4s ease;
+            gap: var(--space-lg);
+            transition: opacity 0.5s ease;
         }
         .splash.hide { opacity: 0; pointer-events: none; }
+        .splash-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--accent);
+            color: var(--surface);
+            padding: 18px;
+            box-sizing: border-box;
+        }
+        .splash-icon svg { width: 100%; height: 100%; display: block; }
         .splash-title { font-family: var(--font-display); font-size: 2rem; color: var(--accent-dark); }
         
         .backup-list { list-style: none; }
@@ -1672,7 +1682,7 @@
         <aside class="sidebar" role="navigation" aria-label="Main navigation">
             <div class="logo-wrap">
                 <div class="logo-mark" aria-hidden="true">
-                    <svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="10"><path d="M56 96a40 40 0 0 1 80 0"/><path d="M48 96a48 48 0 0 1 96 0"/><path d="M40 96a56 56 0 0 1 112 0"/></g></svg>
+                    <svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg"><path d="M36 96 Q 60 72, 96 96 T 156 96" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/><path d="M44 112 Q 68 88, 96 112 T 148 112" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" opacity="0.85"/><path d="M52 128 Q 76 104, 96 128 T 140 128" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" opacity="0.7"/></svg>
                 </div>
                 <h2 class="logo">Aura <span class="logo-accent">Analytics</span></h2>
             </div>
@@ -2422,6 +2432,9 @@
         </main>
         
         <div id="splash" class="splash" aria-hidden="true">
+            <div class="splash-icon" aria-hidden="true">
+                <svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg"><path d="M36 96 Q 60 72, 96 96 T 156 96" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/><path d="M44 112 Q 68 88, 96 112 T 148 112" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" opacity="0.85"/><path d="M52 128 Q 76 104, 96 128 T 140 128" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" opacity="0.7"/></svg>
+            </div>
             <span class="splash-title">Aura</span>
         </div>
         <button type="button" class="fab" id="fabEntry" onclick="navigateFromBottom('entry', document.querySelector('[data-page=entry]'))" aria-label="Quick check-in">✨</button>
@@ -3085,8 +3098,8 @@
             splash.removeAttribute('aria-hidden');
             setTimeout(function() {
                 splash.classList.add('hide');
-                setTimeout(function() { splash.setAttribute('aria-hidden', 'true'); }, 400);
-            }, 800);
+                setTimeout(function() { splash.setAttribute('aria-hidden', 'true'); }, 500);
+            }, 2600);
         })();
         
         function shouldShowAddToHomeBanner() {
@@ -5422,7 +5435,7 @@
         window.addEventListener('beforeinstallprompt', function(e) {
             e.preventDefault();
             deferredInstallPrompt = e;
-            if (localStorage.getItem('auraPwaInstallDismissed') !== 'true' && !window.matchMedia('(display-mode: standalone)').matches) {
+            if (!window.matchMedia('(display-mode: standalone)').matches) {
                 var ban = document.getElementById('pwaInstallBanner');
                 if (ban) ban.classList.add('show');
             }
