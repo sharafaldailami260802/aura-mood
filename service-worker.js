@@ -1,7 +1,7 @@
 /* Aura Mood Analytics - PWA Service Worker
    Offline-first, background sync for backups, update notifications */
 
-const CACHE_VERSION = 2;
+const CACHE_VERSION = 3;
 const CACHE_NAME = 'aura-v' + CACHE_VERSION;
 const OFFLINE_URL = './index.html';
 
@@ -48,13 +48,30 @@ self.addEventListener('activate', function (event) {
   );
 });
 
-// Fetch: offline-first for same-origin and cached CDN; fallback to offline page
+// Fetch: main document = network-first (always fresh when online). Assets = cache-first, then network.
 self.addEventListener('fetch', function (event) {
   var url = event.request.url;
   var sameOrigin = url.startsWith(self.location.origin);
   var isCdn = CDN_ASSETS.some(function (u) { return url.startsWith(u.split('?')[0]); });
+  var isNavigate = event.request.mode === 'navigate';
 
   if (event.request.method !== 'GET') return;
+
+  if (isNavigate) {
+    // Always try network first for the page – no need for Cmd+Shift+R to see updates
+    event.respondWith(
+      fetch(event.request).then(function (res) {
+        if (res && res.status === 200 && res.type === 'basic') {
+          var clone = res.clone();
+          caches.open(CACHE_NAME).then(function (cache) { cache.put(event.request, clone); });
+        }
+        return res;
+      }).catch(function () {
+        return caches.match(OFFLINE_URL) || caches.match(event.request);
+      })
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request).then(function (cached) {
@@ -67,7 +84,6 @@ self.addEventListener('fetch', function (event) {
         });
         return res;
       }).catch(function () {
-        if (event.request.mode === 'navigate') return caches.match(OFFLINE_URL);
         return null;
       });
     })
